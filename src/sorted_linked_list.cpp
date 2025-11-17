@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <tgmath.h>
 
-int sll_insert(struct Node** head, int id, void* pointer) {
-    struct Node* new_node = malloc(sizeof(struct Node));
+int sll_insert(struct sll_node** head, int id, void* pointer) {
+    struct sll_node* new_node = malloc(sizeof(struct sll_node));
     new_node->id = id;
     new_node->pointer = pointer;
     new_node->next = NULL;
@@ -15,8 +15,8 @@ int sll_insert(struct Node** head, int id, void* pointer) {
         *head = new_node;
         return 0;
     }
-    struct Node* temp = *head;
-    struct Node* prev = NULL;
+    struct sll_node* temp = *head;
+    struct sll_node* prev = NULL;
     while (temp->next != NULL) {
         if (temp->id == new_node->id) {
             break;
@@ -35,9 +35,9 @@ int sll_insert(struct Node** head, int id, void* pointer) {
     return -1;
 }
 
-void sll_delete(struct Node** head, int id) {
-    struct Node* temp = *head;
-    struct Node* prev = NULL;
+void sll_delete(struct sll_node** head, int id) {
+    struct sll_node* temp = *head;
+    struct sll_node* prev = NULL;
     if (temp->id == id) {
         *head = (*head)->next;
         free(temp);
@@ -53,8 +53,8 @@ void sll_delete(struct Node** head, int id) {
     }
 }
 
-void* sll_get(struct Node** head, int id) {
-    struct Node* current = *head;
+void* sll_get(struct sll_node** head, int id) {
+    struct sll_node* current = *head;
     while (current != NULL) {
         if (current->id == id) {
             return current;
@@ -69,17 +69,27 @@ void* sll_get(struct Node** head, int id) {
     return NULL;
 }
 
-void sll_clear(struct Node** head) {
-    struct Node* temp = *head;
+void* sll_get_branch(struct sll_node** head, int id) {
+    struct sll_node* current = *head;
+    while (current != NULL) {
+        if (current->id <= id) {
+            current = current->next;
+        }
+        else return current->pointer;
+    }
+}
+
+void sll_clear(struct sll_node** head) {
+    struct sll_node* temp = *head;
     while (temp != NULL) {
-        struct Node* next = temp->next;
+        struct sll_node* next = temp->next;
         free(temp);
         temp = next;
     }
 }
 
-void sll_swap(struct Node** head, int targetID, int newID, void* newPointer) {
-    struct Node* temp = *head;
+void sll_swap(struct sll_node** head, int targetID, int newID, void* newPointer) {
+    struct sll_node* temp = *head;
     while (temp != NULL && temp->id != targetID) {
         temp = temp->next;
     }
@@ -89,9 +99,9 @@ void sll_swap(struct Node** head, int targetID, int newID, void* newPointer) {
     }
 }
 
-int sll_count(struct Node** head) {
+int sll_count(struct sll_node** head) {
     int count = 0;
-    struct Node* current = *head;
+    struct sll_node* current = *head;
     while (current != NULL) {
         count++;
         current = current->next;
@@ -99,15 +109,13 @@ int sll_count(struct Node** head) {
     return count;
 }
 
-void* sll_split(struct Node** head) {
-    int count = sll_count(head);
-    int limit = ceil((count+1)/2.0);
-    struct Node* current = *head;
-    while (limit > 1 && current != NULL) {
+void* sll_split(struct sll_node** head, int position) {
+    struct sll_node* current = *head;
+    while (position > 1 && current != NULL) {
         current = current->next;
-        limit--;
+        position--;
     }
-    struct Node* output = current->next;
+    struct sll_node* output = current->next;
     current->next = NULL;
     return output;
 }

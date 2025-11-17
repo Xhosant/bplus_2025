@@ -4,3 +4,10 @@
  * και τις δομές δεδομένων που σχετίζονται με τους Κόμβους Δεδομένων.*/
 
 #endif
+
+struct dataNode {
+    int branchingFactor;
+    //metadata, then:
+    struct sll_node* head;
+    struct dataNode* tail;
+};
