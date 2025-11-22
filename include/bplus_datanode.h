@@ -16,5 +16,5 @@ struct dataNode {
 };
 
 int leaf_search(int key, struct dataNode* self);
-bool leaf_insert(int key, struct dataNode* self, const Record *record);
+int leaf_insert(int key, struct dataNode* self, const Record *record);
 struct dataNode* leaf_split(struct dataNode* self);

@@ -17,5 +17,5 @@ struct indexNode {
 };
 
 int search(int key, struct indexNode* index);
-bool insert(int key, struct indexNode* index, const Record *record);
+int insert(int key, struct indexNode* index, const Record *record);
 struct indexNode* split(struct indexNode* self);

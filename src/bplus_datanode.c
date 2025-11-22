@@ -6,7 +6,7 @@ int leaf_search(int key, struct dataNode* self) {
     return sll_get(&self->head,key);
 }
 
-bool leaf_insert(int key, struct dataNode* self, const Record *record) {
+int leaf_insert(int key, struct dataNode* self, const Record *record) {
     if (sll_get(&self->head,key)==-1) {return false;} //already exists
 
     int blockID = sll_get_branch(&self->head,key);
@@ -14,7 +14,10 @@ bool leaf_insert(int key, struct dataNode* self, const Record *record) {
     //If not, create new blocks and change blockID to it
     sll_insert_data(&self->head,key, blockID);
     int entryCount = sll_count(&self->head);
-    return entryCount > (self->branchingFactor-1);
+    if (entryCount > (self->branchingFactor-1)) {
+        blockID *=-1;
+    }
+    return blockID;
 }
 
 struct dataNode* leaf_split(struct dataNode* self) {

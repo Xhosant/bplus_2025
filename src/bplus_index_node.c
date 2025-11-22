@@ -17,23 +17,31 @@ int search(int key, struct indexNode* self) {
     }
 }
 
-bool insert(int key, struct indexNode* self, const Record *record) {
-    bool hasSplit = false;
+int insert(int key, struct indexNode* self, const Record *record) {
+    int blockID;
     if (self->isAlmostLeaf) {
         struct dataNode* node = sll_get_branch(&self->head, key);
-        if (leaf_insert(key, node, record)) {
+        blockID = leaf_insert(key, node, record);
+        if (blockID < 0) {
+            blockID *= -1; //return it to positive
             struct dataNode* newNode = leaf_split(node);
             sll_insert_index(&self->head, newNode->head->id, &newNode);
         }
     } else {
         struct indexNode* node = sll_get_branch(&self->head, key);
-        if (insert(key, node, record)) {
+        blockID =insert(key, node, record);
+        if (blockID <0) {
+            blockID *= -1;
             struct indexNode* newNode = split(node);
             sll_insert_index(&self->head, newNode->head->id, &newNode);
         }
     }
     int entryCount = sll_count(&self->head);
-    return entryCount > (self->branchingFactor);
+    if (entryCount > (self->branchingFactor)) {
+        blockID *= -1;
+    }
+
+    return blockID;
 }
 
 struct indexNode* split(struct indexNode* self) {

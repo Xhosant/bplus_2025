@@ -30,7 +30,7 @@ int bplus_close_file(const int file_desc, BPlusMeta* metadata)
 
 int bplus_record_insert(const int file_desc, BPlusMeta *metadata, const Record *record)
 {
-  //if the tree's insert returns True, this must split the root by creating a new root.
+  //if the tree's insert returns negative, this must split the root by creating a new root, and use the positive of the return
   return -1;
 }
 
