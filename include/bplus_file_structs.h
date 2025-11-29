@@ -11,6 +11,8 @@
 #include "bplus_file_structs.h"
 
 typedef struct {
+      TableSchema schema; 
+    int root_block;
 } BPlusMeta;
 
 #endif //BPLUS_BPLUS_FILE_STRUCTS_H
