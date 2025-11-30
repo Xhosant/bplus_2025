@@ -1,17 +1,11 @@
-#ifndef BP_INDEX_NODE_H
-#define BP_INDEX_NODE_H
-#include "bf.h"
+#ifndef BPLUS_INDEX_NODE_H
+#define BPLUS_INDEX_NODE_H
 
-#define BPLUS_MAX_INDEX_KEYS \
-  ((BF_BLOCK_SIZE - 5 * sizeof(int)) / (2 * sizeof(int)))
+#include "bplus_file_structs.h"
 
-typedef struct {
-    int is_leaf;                           
-    int num_keys;                         
-    int unused0;                           
-    int unused1;                           
-    int keys[BPLUS_MAX_INDEX_KEYS];        
-    int children[BPLUS_MAX_INDEX_KEYS + 1];
-} BPlusIndexNode;
+/**
+ * Αρχικοποιεί έναν BPlusIndexNode ως κενό εσωτερικό κόμβο.
+ */
+void bplus_indexnode_init(BPlusIndexNode *node);
 
-#endif /* BP_INDEX_NODE_H */
+#endif // BPLUS_INDEX_NODE_H

@@ -1,18 +1,11 @@
-#ifndef BP_DATANODE_H
-#define BP_DATANODE_H
+#ifndef BPLUS_DATANODE_H
+#define BPLUS_DATANODE_H
 
-#include "bf.h"
-#include "record.h"
+#include "bplus_file_structs.h"
 
+/**
+ * Αρχικοποιεί έναν BPlusDataNode ως κενό φύλλο.
+ */
+void bplus_datanode_init(BPlusDataNode *node);
 
-#define BPLUS_MAX_DATA_RECORDS \
-  ((BF_BLOCK_SIZE - 3 * sizeof(int)) / sizeof(Record))
-
-typedef struct {
-    int is_leaf;                     
-    int num_records;                 
-    int next_leaf;                   
-    Record records[BPLUS_MAX_DATA_RECORDS];  
-} BPlusDataNode;
-
-#endif /* BP_DATANODE_H */
+#endif // BPLUS_DATANODE_H
